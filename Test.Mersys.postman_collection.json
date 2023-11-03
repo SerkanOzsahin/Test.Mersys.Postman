@@ -1,0 +1,2030 @@
+{
+	"info": {
+		"_postman_id": "207a2f0a-9ca0-4041-91e8-284f19e73c42",
+		"name": "Test.Mersys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30582358"
+	},
+	"item": [
+		{
+			"name": "00_Login",
+			"item": [
+				{
+					"name": "Login Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"Invalid\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"rememberMe\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"rememberMe\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "01_Position",
+			"item": [
+				{
+					"name": "Create Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"categoryName\",gelenData.name);\r",
+									"pm.collectionVariables.set(\"categoryID\",gelenData.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/position-category"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Position Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{categoryName}}\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/position-category"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{categoryID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/position-category"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/position-category/{{categoryID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Position Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/position-category/{{categoryID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02_Attestation",
+			"item": [
+				{
+					"name": "Create Attestation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"var responseData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"attestationID\",responseData.id);\r",
+									"pm.collectionVariables.set(\"attestationName\",responseData.name)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"team3\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attestation"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Attestation Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{attestationName}}\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attestation"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Attestation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{attestationID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attestation"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Attestation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attestation/{{attestationID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Attestation Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attestation/{{attestationID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "03_Document Type",
+			"item": [
+				{
+					"name": "Create Document Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"documentID\", gelenData.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"description\": \"team3test\",\r\n    \"attachmentStages\": [\r\n        \"STUDENT_REGISTRATION\"\r\n    ],\r\n    \"active\": true,\r\n    \"required\": true,\r\n    \"useCamera\": false,\r\n    \"translateName\": [],\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attachments/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Document Type Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"already created\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{documentID}}\",\r\n    \"name\": \"team3\",\r\n    \"description\": \"team3test\",\r\n    \"attachmentStages\": [\r\n        \"STUDENT_REGISTRATION\"\r\n    ],\r\n    \"active\": true,\r\n    \"required\": true,\r\n    \"useCamera\": false,\r\n    \"translateName\": [],\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attachments/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Document Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{documentID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"description\": \"team3test\",\r\n    \"attachmentStages\": [\r\n        \"STUDENT_REGISTRATION\"\r\n    ],\r\n    \"active\": true,\r\n    \"required\": true,\r\n    \"useCamera\": false,\r\n    \"translateName\": [],\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/attachments"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Document Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/attachments/{{documentID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Document Type Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/attachments/{{documentID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "04_Admin Panel",
+			"item": [
+				{
+					"name": "Create Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"fieldsID\",gelenData.id);\r",
+									"pm.collectionVariables.set(\"fieldsName\",gelenData.name);\r",
+									"pm.test(\"successfuly\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"translateName\": [],\r\n    \"code\": \"t3\",\r\n    \"type\": \"STRING\",\r\n    \"children\": [],\r\n    \"systemField\": false,\r\n    \"systemFieldName\": null,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/entity-field"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Field Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"successfuly\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{fieldsName}}\",\r\n    \"translateName\": [],\r\n    \"code\": \"5\",\r\n    \"type\": \"STRING\",\r\n    \"children\": [],\r\n    \"systemField\": false,\r\n    \"systemFieldName\": null,\r\n    \"schoolId\": \"789456123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/entity-field"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{fieldsID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"translateName\": [],\r\n    \"code\": \"t3\",\r\n    \"type\": \"STRING\",\r\n    \"children\": [],\r\n    \"systemField\": false,\r\n    \"systemFieldName\": null,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/entity-field"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/entity-field/{{fieldsID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Field Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/entity-field/{{fieldsID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "05_HRPosition",
+			"item": [
+				{
+					"name": "Create HRPosition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var incomingData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"HRpositionsID\", incomingData.id);\r",
+									"var incomingData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"HRpositionsName\", incomingData.name);\r",
+									"pm.test(\"Positions has been created successfully\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"shortName\": \"t3\",\r\n    \"translateName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/employee-position"
+					},
+					"response": []
+				},
+				{
+					"name": "Create HRPosition Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Positions has been created successfully\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									" pm.expect(pm.response.text()).to.include(\"already exists\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{HRpositionsName}}\",\r\n    \"shortName\": \"t3\",\r\n    \"translateName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/employee-position"
+					},
+					"response": []
+				},
+				{
+					"name": "Update HRPosition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"positions has been edited successfully\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{HRpositionsID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"shortName\": \"t3\",\r\n    \"translateName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/employee-position"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete HRPosition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/employee-position/{{HRpositionsID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete HRPosition Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/employee-position/{{HRpositionsID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "06_Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"var responseData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"educationID\",responseData.id);\r",
+									"pm.collectionVariables.set(\"educationName\",responseData.name)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"team3\",\r\n    \"translateName\": [],\r\n    \"code\": \"t3\",\r\n    \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/subject-categories"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{educationName}}\",\r\n    \"translateName\": [],\r\n    \"code\": \"t3\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/subject-categories"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{educationID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"translateName\": [],\r\n    \"code\": \"grp3\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/subject-categories"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/subject-categories/{{educationID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/subject-categories/{{educationID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "07_School Location",
+			"item": [
+				{
+					"name": "Create School Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"schoolID\", gelenData.id);\r",
+									"var gelenData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"schoolName\", gelenData.name);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"shortName\": \"t3\",\r\n    \"active\": true,\r\n    \"capacity\": 5,\r\n    \"type\": \"CLASS\",\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/location"
+					},
+					"response": []
+				},
+				{
+					"name": "Create School Location Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"exists\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{schoolName}}\",\r\n    \"shortName\": \"t3\",\r\n    \"active\": true,\r\n    \"capacity\": 5,\r\n    \"type\": \"CLASS\",\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/location"
+					},
+					"response": []
+				},
+				{
+					"name": "Update School Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{schoolID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"shortName\": \"t3\",\r\n    \"active\": true,\r\n    \"capacity\": 5,\r\n    \"type\": \"CLASS\",\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/location"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete School Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/location/{{schoolID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete School Location Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/location/{{schoolID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "08_Department",
+			"item": [
+				{
+					"name": "Create Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"departmentName\",gelenData.name);\r",
+									"pm.collectionVariables.set(\"departmentID\",gelenData.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"code\": \"t3\",\r\n    \"active\": true,\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\",\r\n    \"sections\": [],\r\n    \"constants\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Department Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{departmentName}}\",\r\n    \"code\": \"t3\",\r\n    \"active\": true,\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\",\r\n    \"sections\": [],\r\n    \"constants\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{departmentID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"code\": \"t3edit\",\r\n    \"active\": true,\r\n    \"school\": \"646cbb07acf2ee0d37c6d984\",\r\n    \"sections\": [],\r\n    \"constants\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/department/{{departmentID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Department Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/department/{{departmentID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "09_Bank Account",
+			"item": [
+				{
+					"name": "Create Bank Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"bankName\",gelenData.name);\r",
+									"pm.collectionVariables.set(\"bankID\",gelenData.id);\r",
+									"pm.collectionVariables.set(\"bankIban\",gelenData.iban);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"team3\",\r\n    \"iban\": \"00003333\",\r\n    \"integrationCode\": \"t3\",\r\n    \"currency\": \"TRY\",\r\n    \"active\": true,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/bank-accounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bank Account Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{bankName}}\",\r\n    \"iban\": \"{{bankIban}}\",\r\n    \"integrationCode\": \"t3\",\r\n    \"currency\": \"TRY\",\r\n    \"active\": true,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/bank-accounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bank Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{bankID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"iban\": \"00004444\",\r\n    \"integrationCode\": \"t3\",\r\n    \"currency\": \"TRY\",\r\n    \"active\": true,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/bank-accounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bank Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{URL}}/school-service/api/bank-accounts/{{bankID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bank Account Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{URL}}/school-service/api/bank-accounts/{{bankID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "10_Grade Level",
+			"item": [
+				{
+					"name": "Create Grade Level",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var incomingData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"gradeLevelID\", incomingData.id);\r",
+									"var incomingData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"gradeLevelName\", incomingData.name);\r",
+									"pm.test(\"Grade level has been created successfully\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"shortName\": \"t3\",\r\n    \"nextGradeLevel\": null,\r\n    \"order\": \"123\",\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"maxApplicationCount\": 440,\r\n    \"active\": true,\r\n    \"schoolIds\": [\r\n        \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"enableForSelectedSchools\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/grade-levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Grade Level Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Grade Level has been created successfully\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"already exists\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{gradeLevelName}}\",\r\n    \"shortName\": \"t3\",\r\n    \"nextGradeLevel\": null,\r\n    \"order\": \"123\",\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"maxApplicationCount\": 440,\r\n    \"active\": true,\r\n    \"schoolIds\": [\r\n        \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"enableForSelectedSchools\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/grade-levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Grade Level",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"positions has been edited successfully\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{gradeLevelID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"shortName\": \"t3\",\r\n    \"nextGradeLevel\": null,\r\n    \"order\": \"123\",\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"maxApplicationCount\": 440,\r\n    \"active\": true,\r\n    \"schoolIds\": [\r\n        \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"enableForSelectedSchools\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/grade-levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Grade Level",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"positions has been deleted successfully\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/grade-levels/{{gradeLevelID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Grade Level Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"positions has been deleted successfully\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/grade-levels/{{gradeLevelID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "11_Discount",
+			"item": [
+				{
+					"name": "Create Discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"var responseData=pm.response.json();\r",
+									"pm.collectionVariables.set(\"discountID\",responseData.id);\r",
+									"pm.collectionVariables.set(\"descriptionName\",responseData.description)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"team3\",\r\n    \"code\": \"t3\",\r\n    \"translateDescription\": [],\r\n    \"active\": true,\r\n    \"priority\": 5,\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/discounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Discount Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{descriptionName}}\",\r\n    \"code\": \"t3\",\r\n    \"translateDescription\": [],\r\n    \"active\": true,\r\n    \"priority\": 5,\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/discounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{discountID}}\",\r\n    \"description\": \"team3edit\",\r\n    \"code\": \"t3\",\r\n    \"active\": true,\r\n    \"translateDescription\": [],\r\n    \"priority\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/discounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/discounts/{{discountID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discount Negavite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/discounts/{{discountID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "12_Nationality",
+			"item": [
+				{
+					"name": "Create Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var gelenData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"nationalityID\", gelenData.id);\r",
+									"var gelenData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"nationalityName\", gelenData.name);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"team3\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/nationality"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Nationality Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"exists\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{nationalityName}}\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/nationality"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{nationalityID}}\",\r\n    \"name\": \"team3edit\",\r\n    \"translateName\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/school-service/api/nationality"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/nationality/{{nationalityID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Nationality Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"not  found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/school-service/api/nationality/{{nationalityID}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "13_Logout",
+			"item": [
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{URL}}/auth/logout"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": "turkeyts",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "TechnoStudy123",
+			"type": "string"
+		},
+		{
+			"key": "URL",
+			"value": "https://test.mersys.io",
+			"type": "string"
+		},
+		{
+			"key": "documentID",
+			"value": ""
+		},
+		{
+			"key": "schoolID",
+			"value": ""
+		},
+		{
+			"key": "schoolName",
+			"value": ""
+		},
+		{
+			"key": "nationalityID",
+			"value": ""
+		},
+		{
+			"key": "nationalityName",
+			"value": ""
+		}
+	]
+}
